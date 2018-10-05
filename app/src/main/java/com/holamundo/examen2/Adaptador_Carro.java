@@ -1,5 +1,6 @@
 package com.holamundo.examen2;
 
+import android.content.Context;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,11 +14,14 @@ import java.util.ArrayList;
 public class Adaptador_Carro extends
         RecyclerView.Adapter<Adaptador_Carro.CarroViewHolder>{
 
-    private ArrayList<Carro> personas;
+    private ArrayList<Carro> carros;
+    private Context contexto;
 
-    public Adaptador_Carro(ArrayList<Carro> personas){
-        this.personas =  personas;
+    public Adaptador_Carro(ArrayList<Carro> carros, Context contexto) {
+        this.carros = carros;
+        this.contexto = contexto;
     }
+
     @Override
     public CarroViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_carro,parent,false);
@@ -26,19 +30,18 @@ public class Adaptador_Carro extends
 
     @Override
     public void onBindViewHolder(CarroViewHolder holder, int position) {
-        Carro c = personas.get(position);
-        holder.foto.setImageResource(c.getFoto());
+        Carro c = carros.get(position);
         holder.foto.setImageResource(c.getFoto());
         holder.placa.setText(c.getPlaca());
-        holder.color.setText(c.getColor());
-        holder.marca.setText(c.getMarca());
+        holder.color.setText(contexto.getResources().getStringArray(R.array.opciones_color)[c.getColor()]);
+        holder.marca.setText(contexto.getResources().getStringArray(R.array.opciones_marca)[c.getMarca()]);
         holder.precio.setText(""+c.getPrecio());
 
     }
 
     @Override
     public int getItemCount() {
-        return personas.size();
+        return carros.size();
     }
 
     public static class CarroViewHolder extends RecyclerView.ViewHolder{

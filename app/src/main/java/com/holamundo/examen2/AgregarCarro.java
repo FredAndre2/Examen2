@@ -1,6 +1,7 @@
 package com.holamundo.examen2;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,12 +21,13 @@ public class AgregarCarro extends AppCompatActivity {
     private String[] opc;
     private ArrayList<Integer> fotos;
     private ImageView foto;
+    private Resources recursos;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_carro);
-
+        recursos = this.getResources();
         txtplaca = findViewById(R.id.Txt_Placa);
         txtprecio = findViewById(R.id.Txt_Precio);
         cmbcolor = findViewById(R.id.Cmb_Color);
@@ -44,20 +46,50 @@ public class AgregarCarro extends AppCompatActivity {
         fotoSeleccionada = r.nextInt(this.fotos.size());
         return fotos.get(fotoSeleccionada);
     }
+    public boolean Validar(){
+
+        if (txtplaca.getText().toString().isEmpty()){
+            txtplaca.requestFocus();
+            txtplaca.setError(recursos.getString(R.string.Error2));
+            return false;
+        }
+
+        if (txtprecio.getText().toString().isEmpty()){
+            txtprecio.requestFocus();
+            txtprecio.setError(recursos.getString(R.string.Error2));
+            return false;
+        }
+
+        if (Integer.parseInt(txtprecio.getText().toString())==0){
+            txtprecio.requestFocus();
+            txtprecio.setError(recursos.getString(R.string.Error1));
+            return false;
+        }
+
+        return true;
+    }
+
     public void guardar(View v){
         String placa;
         int foto,color,marca;
         double precio;
 
-        foto =this.fotoAleatoria();
-        placa = txtplaca.getText().toString();
-        precio = Double.parseDouble(txtprecio.getText().toString());
-        color = cmbcolor.getSelectedItemPosition();
-        marca = cmbmarca.getSelectedItemPosition();
-
+if(Validar()){
+    foto =this.fotoAleatoria();
+    placa = txtplaca.getText().toString();
+    precio = Double.parseDouble(txtprecio.getText().toString());
+    color = cmbcolor.getSelectedItemPosition();
+    marca = cmbmarca.getSelectedItemPosition();
+    Metodos metodos = new Metodos();
+    if(metodos.Validar_Placa(placa)){
         Carro c = new Carro(foto,placa,color,marca,precio);
         c.guardar();
         Snackbar.make(v,"Registro guardado con exito!",Snackbar.LENGTH_SHORT).show();
+    }
+    else{
+        Snackbar.make(v,"No se pudo guardar el registro, ya existe una carro con esa placa",Snackbar.LENGTH_SHORT).show();
+    }
+}
 
     }
     public void Limpiar(){

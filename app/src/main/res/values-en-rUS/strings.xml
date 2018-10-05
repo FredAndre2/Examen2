@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Exam2</string>
+    <string name="agregarcarro">Add Cart</string>
+    <string name="guardar">Save</string>
+    <string name="limpiar">Clear</string>
+    <string name="placa">License plate</string>
+    <string name="rojo">Red</string>
+    <string name="blanco">White</string>
+    <string name="amarillo">Yellow</string>
+    <string name="azul">Blue</string>
+    <string name="chevrolet">Chevrolet</string>
+    <string name="mazda">Mazda</string>
+    <string name="renault">Renault</string>
+    <string name="BMW">BMW</string>
+    <string name="lamborghini">Lamborghini</string>
+    <string name="precio">Price</string>
+    <string name="Error1">The price can not be zero</string>
+    <string name="Error2">The field can not go empty</string>
+</resources>
